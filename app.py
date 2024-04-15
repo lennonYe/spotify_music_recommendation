@@ -41,7 +41,6 @@ if __name__ == "__main__":
         show_dialog=True,
         cache_path= cache_path
     )
-    st.write(os.environ['SPOTIPY_REDIRECT_URI'])
     # Initialize session state
     if 'auth_manager' not in st.session_state:
         st.session_state['auth_manager'] = auth_manager
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     if st.session_state['need_login']:
         auth_url = auth_manager.get_authorize_url()
         st.write(auth_url)
-        login_button_html = f"<a href='{auth_url}' target='_self'><button style='color: white; background-color: #1DB954; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 18px; border-radius: 18px; width: 250px; cursor: pointer;'>Login using Spotify</button></a>"
+        login_button_html = f"<a href='{auth_url}' target='_blank'><button style='color: white; background-color: #1DB954; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 18px; border-radius: 18px; width: 250px; cursor: pointer;'>Login using Spotify</button></a>"
         st.sidebar.markdown(login_button_html, unsafe_allow_html=True)
     else:
         # User is logged in, fetch user data and update sidebar content
