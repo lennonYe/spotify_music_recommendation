@@ -46,8 +46,8 @@ def display_top_tracks(top_tracks={}):
 
                 with col:
                     st.markdown(f"""
-                    <div class="card" style="margin: auto; max-width: 550px; margin-bottom: 20px; text-align: center;">
-                        <img class="image" src="{track_image_url}" alt="{track_name}" style="width: 100%; height: 550px; object-fit: cover;">
+                    <div class="card" style="margin: auto; max-width: 400px; margin-bottom: 20px; text-align: center;">
+                        <img class="image" src="{track_image_url}" alt="{track_name}" style="width: 100%; height: 400px; object-fit: cover;">
                         <h3>{track_name}</h3>
                         <p>{track_artist}</p>
                         {iframe_html}

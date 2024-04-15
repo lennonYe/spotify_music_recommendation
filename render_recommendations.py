@@ -141,8 +141,8 @@ def display_recommendation(user_data = None,sp = None):
                     iframe = f"<audio src='{preview_url}' controls>Your browser does not support the audio element.</audio>" if preview_url != 'No preview available' else "Preview not available."
 
                 st.markdown(f"""
-                <div class="card" style="margin: auto; max-width: 550px; margin-bottom: 20px; text-align: center;">
-                    <img class="image" src="{track['image_url']}" alt="{track['name']}" style="width: 100%; height: 550px; border-radius: 20px; object-fit: cover;">
+                <div class="card" style="margin: auto; max-width: 400px; margin-bottom: 20px; text-align: center;">
+                    <img class="image" src="{track['image_url']}" alt="{track['name']}" style="width: 100%; height: 400px; border-radius: 20px; object-fit: cover;">
                     <h4 style="margin-top: 10px;">{track['name']}</h4>
                     <p>{track['artist']}</p>
                     {iframe}
