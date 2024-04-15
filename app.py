@@ -20,7 +20,7 @@ if __name__ == "__main__":
     scope = 'user-library-read playlist-read-private user-top-read user-read-recently-played user-read-private'
     os.environ["SPOTIPY_CLIENT_ID"] = "5b690855f0664257a567c12a16db3b19"
     os.environ["SPOTIPY_CLIENT_SECRET"] = "f820a8c138654e70850d1ac7bc4f4c8e"
-    os.environ["SPOTIPY_REDIRECT_URI"] = "http://localhost:8501"
+    os.environ["SPOTIPY_REDIRECT_URI"] = "https://spotify-recommendation-5c66924c5d8a.herokuapp.com"
     user_data = {}
     cache_path = ".spotifycache"
     # set page configuration
