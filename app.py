@@ -18,9 +18,6 @@ import matplotlib
 if __name__ == "__main__":
     # define the scope according to your requirement
     scope = 'user-library-read playlist-read-private user-top-read user-read-recently-played user-read-private'
-    # os.environ["SPOTIPY_CLIENT_ID"] = "5b690855f0664257a567c12a16db3b19"
-    # os.environ["SPOTIPY_CLIENT_SECRET"] = "f820a8c138654e70850d1ac7bc4f4c8e"
-    # os.environ["SPOTIPY_REDIRECT_URI"] = "https://spotify-recommendation-sys.streamlit.app"
     user_data = {}
     cache_path = ".spotifycache"
     # set page configuration
@@ -60,12 +57,13 @@ if __name__ == "__main__":
         token = auth_manager.get_access_token(code)
         if token:
             st.session_state['auth_token'] = token
-            st.query_params.clear()  # 清除查询参数
+            st.query_params.clear() 
             st.session_state['need_login'] = False
 
     # Check login status
     if st.session_state['need_login']:
         auth_url = auth_manager.get_authorize_url()
+        st.write(auth_url)
         login_button_html = f"<a href='{auth_url}' target='_self'><button style='color: white; background-color: #1DB954; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 18px; border-radius: 18px; width: 250px; cursor: pointer;'>Login using Spotify</button></a>"
         st.sidebar.markdown(login_button_html, unsafe_allow_html=True)
     else:
