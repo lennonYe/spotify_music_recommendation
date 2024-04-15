@@ -18,9 +18,9 @@ import matplotlib
 if __name__ == "__main__":
     # define the scope according to your requirement
     scope = 'user-library-read playlist-read-private user-top-read user-read-recently-played user-read-private'
-    os.environ["SPOTIPY_CLIENT_ID"] = "5b690855f0664257a567c12a16db3b19"
-    os.environ["SPOTIPY_CLIENT_SECRET"] = "f820a8c138654e70850d1ac7bc4f4c8e"
-    os.environ["SPOTIPY_REDIRECT_URI"] = "https://spotify-recommendation-sys.streamlit.app"
+    # os.environ["SPOTIPY_CLIENT_ID"] = "5b690855f0664257a567c12a16db3b19"
+    # os.environ["SPOTIPY_CLIENT_SECRET"] = "f820a8c138654e70850d1ac7bc4f4c8e"
+    # os.environ["SPOTIPY_REDIRECT_URI"] = "https://spotify-recommendation-sys.streamlit.app"
     user_data = {}
     cache_path = ".spotifycache"
     # set page configuration
@@ -44,6 +44,7 @@ if __name__ == "__main__":
         show_dialog=True,
         cache_path= cache_path
     )
+    st.write(os.environ['SPOTIPY_REDIRECT_URI'])
     # Initialize session state
     if 'auth_manager' not in st.session_state:
         st.session_state['auth_manager'] = auth_manager
