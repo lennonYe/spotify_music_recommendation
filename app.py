@@ -62,7 +62,6 @@ if __name__ == "__main__":
     # Check login status
     if st.session_state['need_login']:
         auth_url = auth_manager.get_authorize_url()
-        st.write(auth_url)
         login_button_html = f"<a href='{auth_url}' target='_blank'><button style='color: white; background-color: #1DB954; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 18px; border-radius: 18px; width: 250px; cursor: pointer;'>Login using Spotify</button></a>"
         st.sidebar.markdown(login_button_html, unsafe_allow_html=True)
     else:
