@@ -25,11 +25,11 @@ def display_data_analysis():
     cluster_pipeline = load("genre_cluster_pipeline.joblib")
     st.title('Data Analysis Visualizations')
     
-    # 随时间变化的特征可视化
+    # Features over year
     st.subheader('Features Over Years')
     fig = px.line(year_data, x='year', y=['acousticness', 'danceability', 'energy'])
     st.plotly_chart(fig,use_container_width=True)
-    # 流派特征可视化
+    # Genre data
     st.subheader('Genre Characteristics')
     top10_genres = genre_data.nlargest(10, 'popularity')
     fig = px.bar(top10_genres, x='genres', y=['valence', 'energy', 'danceability', 'acousticness'], barmode='group')

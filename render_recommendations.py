@@ -68,7 +68,7 @@ def get_mean_vector(song_list, spotify_data,sp):
             print('Warning: {} does not exist in Spotify or in database'.format(song['name']))
             continue
         song_vector = song_data[number_cols].values
-        print(f"Vector length for {song['name']}: {len(song_vector)}")  # 检查长度
+        print(f"Vector length for {song['name']}: {len(song_vector)}") 
         print(song_vector)
         song_vectors.append(song_vector)  
     
@@ -103,8 +103,7 @@ def recommend_songs( song_list, spotify_data,sp, n_songs=10):
     
     rec_songs = spotify_data.iloc[index]
     rec_songs = rec_songs[~rec_songs['name'].isin(song_dict['name'])]
-    return (rec_songs.to_dict(orient='records')) # 返回整行数据作为字典
-
+    return (rec_songs.to_dict(orient='records')) 
 
 def fetch_track_details(track_ids, sp):
     track_details = []
@@ -131,9 +130,9 @@ def display_recommendation(user_data = None,sp = None):
         recommendation_song_list = recommend_songs(song_list,data,sp)
         track_ids = [track['id'] for track in recommendation_song_list]
         detailed_tracks = fetch_track_details(track_ids, sp)
-        cols = st.columns(2)  # 创建两列布局
+        cols = st.columns(2)  
         for index, track in enumerate(detailed_tracks):
-            with cols[index % 2]:  # 选择列，交替放置
+            with cols[index % 2]:  
                 if st.session_state['premium']:
                     embed_url = f"https://open.spotify.com/embed/track/{track['uri'].split(':')[-1]}"
                     iframe = f"<iframe src='{embed_url}' width='100%' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media'></iframe>"
@@ -141,7 +140,6 @@ def display_recommendation(user_data = None,sp = None):
                     preview_url = track.get('preview_url', 'No preview available')
                     iframe = f"<audio src='{preview_url}' controls>Your browser does not support the audio element.</audio>" if preview_url != 'No preview available' else "Preview not available."
 
-                # 使用 HTML 和 CSS 创建一个卡片式布局
                 st.markdown(f"""
                 <div class="card" style="margin: auto; max-width: 550px; margin-bottom: 20px; text-align: center;">
                     <img class="image" src="{track['image_url']}" alt="{track['name']}" style="width: 100%; height: 550px; border-radius: 20px; object-fit: cover;">
