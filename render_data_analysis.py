@@ -29,11 +29,30 @@ def display_data_analysis():
     st.subheader('Features Over Years')
     fig = px.line(year_data, x='year', y=['acousticness', 'danceability', 'energy'])
     st.plotly_chart(fig,use_container_width=True)
+
+    #Song durations over the year
+    st.subheader('Song duration in minutes over the year')
+    year_data_revised = year_data
+    year_data_revised["duration_min"] = year_data['duration_ms'] / 60000
+    fig = px.line(year_data_revised, x='year', y='duration_min')
+
+    # Customize line and markers
+    fig.update_traces(line=dict(color='blue', width=2.5))  # Customize markers
+    fig.update_yaxes(title_text='Duration')
+    st.plotly_chart(fig,use_container_width=True)
+
     # Genre data
     st.subheader('Genre Characteristics')
     top10_genres = genre_data.nlargest(10, 'popularity')
     fig = px.bar(top10_genres, x='genres', y=['valence', 'energy', 'danceability', 'acousticness'], barmode='group')
     st.plotly_chart(fig,use_container_width=True)
+
+    #Song durations over the year
+
+
+
+
+
     # K-Means on genre data visualization
     st.subheader('Clustering Genres with K-Means')
     X = genre_data.select_dtypes(np.number)
@@ -48,6 +67,8 @@ def display_data_analysis():
     fig = px.scatter(
         projection, x='x', y='y', color='cluster', hover_data=['x', 'y', 'genres'])
     st.plotly_chart(fig,use_container_width=True)
+
+
 
     st.subheader('Clustering Song titles with K-Means')
     X = data.select_dtypes(np.number)
