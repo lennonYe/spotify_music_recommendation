@@ -90,18 +90,37 @@ def flatten_dict_list(dict_list):
 
 
 def recommend_songs( song_list, spotify_data,sp, n_songs=10):
+    # song_cluster_pipeline = load('recommendation_model.joblib')
+    # metadata_cols = ['name', 'year', 'artists']
+    # song_dict = flatten_dict_list(song_list)
+    
+    # song_center = get_mean_vector(song_list, spotify_data,sp)
+    # scaler = song_cluster_pipeline.steps[0][1]
+    # scaled_data = scaler.transform(spotify_data[number_cols])
+    # scaled_song_center = scaler.transform(song_center.reshape(1, -1))
+    # distances = cdist(scaled_song_center, scaled_data, 'cosine')
+    # index = list(np.argsort(distances)[:, :n_songs][0])
+    
+    # rec_songs = spotify_data.iloc[index]
+    # rec_songs = rec_songs[~rec_songs['name'].isin(song_dict['name'])]
+    # return (rec_songs.to_dict(orient='records')) 
     song_cluster_pipeline = load('recommendation_model.joblib')
     metadata_cols = ['name', 'year', 'artists']
     song_dict = flatten_dict_list(song_list)
     
     song_center = get_mean_vector(song_list, spotify_data,sp)
     scaler = song_cluster_pipeline.steps[0][1]
-    scaled_data = scaler.transform(spotify_data[number_cols])
-    scaled_song_center = scaler.transform(song_center.reshape(1, -1))
-    distances = cdist(scaled_song_center, scaled_data, 'cosine')
-    index = list(np.argsort(distances)[:, :n_songs][0])
+    kmeans = song_cluster_pipeline.steps[1][1]
+    scaled_song_center = scaler.transform([song_center])
+
+    preferred_cluster = kmeans.predict(scaled_song_center)[0]
+    cluster_data = spotify_data[spotify_data['cluster_label'] == preferred_cluster]
+    scaled_cluster_data = scaler.transform(cluster_data[number_cols])
+
+    distances = cdist(scaled_song_center, scaled_cluster_data, 'cosine')
+    closest_indices = np.argsort(distances[0])[:n_songs]
     
-    rec_songs = spotify_data.iloc[index]
+    rec_songs = cluster_data.iloc[closest_indices]
     rec_songs = rec_songs[~rec_songs['name'].isin(song_dict['name'])]
     return (rec_songs.to_dict(orient='records')) 
 
