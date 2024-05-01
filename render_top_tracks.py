@@ -18,6 +18,10 @@ def display_top_tracks(top_tracks={}):
             st.session_state['page'] = 0  
         st.session_state['show_sidebar_player'] = True
 
+
+        st.session_state['premium'] = False
+
+
         total_tracks = len(top_tracks['items'])
         tracks_per_page = 4 
         total_pages = (total_tracks + tracks_per_page - 1) // tracks_per_page
