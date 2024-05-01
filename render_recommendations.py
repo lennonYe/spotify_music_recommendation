@@ -104,9 +104,16 @@ def recommend_songs( song_list, spotify_data,sp, n_songs=10):
     # rec_songs = spotify_data.iloc[index]
     # rec_songs = rec_songs[~rec_songs['name'].isin(song_dict['name'])]
     # return (rec_songs.to_dict(orient='records')) 
+
+    X = spotify_data.select_dtypes(np.number)
+    number_cols = list(X.columns)
+    # song_cluster_pipeline.fit(X)
+
     song_cluster_pipeline = load('recommendation_model.joblib')
     metadata_cols = ['name', 'year', 'artists']
     song_dict = flatten_dict_list(song_list)
+    song_cluster_labels = song_cluster_pipeline.predict(X)
+    spotify_data['cluster_label'] = song_cluster_labels
     
     song_center = get_mean_vector(song_list, spotify_data,sp)
     scaler = song_cluster_pipeline.steps[0][1]
@@ -143,6 +150,11 @@ def fetch_track_details(track_ids, sp):
 def display_recommendation(user_data = None,sp = None):
     if st.session_state["need_login"] == False:
         data = pd.read_csv("Spotify_dataset/data.csv")
+
+
+
+
+
         top_tracks = user_data["top_tracks"]["items"]
         song_list = [{'name': track['name'], 'year': track['album']['release_date'][:4]} for track in top_tracks]
         song_list = [{'name': item['name'], 'year': int(item['year'])} for item in song_list]
