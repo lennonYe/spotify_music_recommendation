@@ -3,14 +3,14 @@ import streamlit as st
 
 def display_user_favorite_in_sidebar(user_top_track):
     track_id = user_top_track['spotify_uri'].split(':')[-1]
-    embed_url = f"https://open.spotify.com/embed/track/{track_id}" if st.session_state['premium'] else user_top_track.get('preview_url')
-
-    iframe_html = f"<iframe src='{embed_url}' width='100%' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media'></iframe>" if st.session_state['premium'] else f"<audio controls><source src='{embed_url}' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
-
-    with st.sidebar:
-        st.header("Your Favorite Track")
-        st.write(f"{user_top_track['name']} by {user_top_track['artist']}")
-        st.markdown(iframe_html, unsafe_allow_html=True)
+    if st.session_state['premium']:
+        embed_url = f"https://open.spotify.com/embed/track/{track_id}"
+        with st.sidebar:
+            st.header("Your Favorite Track")
+            st.write(f"{user_top_track['name']} by {user_top_track['artist']}")
+            st.markdown(f"""
+                <iframe src="{embed_url}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            """, unsafe_allow_html=True)
 
 
 def display_top_tracks(top_tracks={}):
