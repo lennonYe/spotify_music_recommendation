@@ -5,16 +5,22 @@ def display_user_favorite_in_sidebar(user_top_track):
     track_id = user_top_track['spotify_uri'].split(':')[-1]
     if st.session_state['premium']:
         embed_url = f"https://open.spotify.com/embed/track/{track_id}"
+        embed_html = f"""
+            <iframe src="{embed_url}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        """
     else:
-        embed_url =  user_top_track.get('preview_url', '#')
-
+        preview_url =  user_top_track.get('preview_url', '#')
+        embed_html = f"""
+            <audio controls>
+                <source src="{preview_url}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        """
 
     with st.sidebar:
         st.header("Your Favorite Track")
         st.write(f"{user_top_track['name']} by {user_top_track['artist']}")
-        st.markdown(f"""
-            <iframe src="{embed_url}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        """, unsafe_allow_html=True)
+        st.markdown(embed_html, unsafe_allow_html=True)
 
 def display_top_tracks(top_tracks={}):
     if st.session_state['need_login'] == False:
@@ -23,7 +29,6 @@ def display_top_tracks(top_tracks={}):
         st.session_state['show_sidebar_player'] = True
 
 
-        st.session_state['premium'] = False
 
 
         total_tracks = len(top_tracks['items'])
