@@ -76,7 +76,10 @@ if __name__ == "__main__":
 
 
         # check for premium
-        st.session_state['premium'] = product_type == 'premium'
+        # st.session_state['premium'] = product_type == 'premium'
+        
+        st.session_state['premium'] = False
+
         if st.sidebar.button('Logout'):
             st.session_state['need_login'] = True
             if os.path.exists(cache_path):

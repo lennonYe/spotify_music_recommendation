@@ -3,7 +3,11 @@ import streamlit as st
 
 def display_user_favorite_in_sidebar(user_top_track):
     track_id = user_top_track['spotify_uri'].split(':')[-1]
-    embed_url = f"https://open.spotify.com/embed/track/{track_id}"
+    if st.session_state['premium']:
+        embed_url = f"https://open.spotify.com/embed/track/{track_id}"
+    else:
+        embed_url =  user_top_track.get('preview_url', '#')
+
 
     with st.sidebar:
         st.header("Your Favorite Track")
