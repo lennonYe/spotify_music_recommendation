@@ -134,6 +134,11 @@ def recommend_songs( song_list, spotify_data,sp, n_songs=10):
 def fetch_track_details(track_ids, sp):
     track_details = []
     tracks_info = sp.tracks(tracks=track_ids)
+
+
+    print(tracks_info['tracks'])
+
+    
     for track in tracks_info['tracks']:
         details = {
             'name': track['name'],
